@@ -2,7 +2,7 @@
 body {
   background-image: linear-gradient(to bottom, #2c2c2c, #1a1a1a 116px);
   color: #b0b0b0;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
 }
 #chessground-examples {
@@ -45,4 +45,8 @@ body {
 #chessground-examples control .zoom input {
   margin-left: 1em;
   width: 4em;
+}
+.author {
+  background-color: white;
+  color: black;
 }
