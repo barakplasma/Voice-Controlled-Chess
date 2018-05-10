@@ -2,6 +2,7 @@ import { Chess } from "chess.js";
 import { Chessground } from "chessground";
 import { Unit } from "./unit";
 import { toDests, aiPlay, playOtherSide } from "../util";
+import { voiceRecognition } from "../voiceRecognition";
 
 export const initial: Unit = {
   name: "Play legal moves from initial position",
@@ -17,6 +18,7 @@ export const initial: Unit = {
     cg.set({
       movable: { events: { after: playOtherSide(cg, chess) } }
     });
+    // voiceRecognition(cg);
     return cg;
   }
 };
@@ -32,7 +34,7 @@ export const vsRandom: Unit = {
         dests: toDests(chess)
       }
     });
-    cg.set({
+    voiceRecognition(cg).set({
       movable: {
         events: {
           after: aiPlay(cg, chess, 1000, false)
