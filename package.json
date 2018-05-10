@@ -25,7 +25,7 @@
     "watchify": "^3"
   },
   "scripts": {
-    "prepublish": "gulp dev",
+    "prepare": "gulp dev",
     "start": "serve"
   }
 }
