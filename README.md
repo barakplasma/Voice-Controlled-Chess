@@ -8,3 +8,5 @@ Demo at [Glitch.com](https://energetic-market.glitch.me/#!/0)
 npm i
 npm start
 ```
+
+Learn more about [Web_Speech_API at MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API)
