@@ -8,8 +8,8 @@
   "dependencies": {
     "chess.js": "^0.10",
     "chessground": "^7.3",
+    "live-server": "^1.2.0",
     "page": "^1.7",
-    "serve": "^6.5.6",
     "snabbdom": "^0.6"
   },
   "devDependencies": {
@@ -26,6 +26,6 @@
   },
   "scripts": {
     "prepare": "gulp dev",
-    "start": "serve"
+    "start": "live-server --watch=./src"
   }
 }
