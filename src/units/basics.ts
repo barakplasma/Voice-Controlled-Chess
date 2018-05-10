@@ -1,32 +1,53 @@
-import { Chessground }  from 'chessground';
-import { Unit } from './unit';
+import { Chessground } from "chessground";
+import { Unit } from "./unit";
+import { Key } from "chessground/types";
 
 export const defaults: Unit = {
-  name: 'Default configuration',
+  name: "Default configuration",
   run(el) {
-    return Chessground(el);
-  }
-};
+    const cq = Chessground(el);
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+    var SpeechRecognitionEvent =
+      SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
-export const fromFen: Unit = {
-  name: 'From FEN, from black POV',
-  run(el) {
-    return Chessground(el, {
-      fen:'2r3k1/pp2Qpbp/4b1p1/3p4/3n1PP1/2N4P/Pq6/R2K1B1R w -',
-      orientation: 'black'
-    });
-  }
-};
+    var letters = "abcdefgh".split("");
+    var numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+    var grammar = `#JSGF V1.0; grammar commands; <letter> = ${letters.join(
+      " | "
+    )}; <number> = ${numbers.join(" | ")}; public <move> = [<letter><number>]+`;
 
-export const lastMoveCrazyhouse: Unit = {
-  name: 'Last move: crazyhouse',
-  run(el) {
-    const cg = Chessground(el);
-    setTimeout(() => {
-      cg.set({lastMove:['e2', 'e4']});
-      setTimeout(() => cg.set({lastMove:['g6']}), 1000);
-      setTimeout(() => cg.set({lastMove:['e1']}), 2000);
-    });
-    return cg;
+    var recognition = new SpeechRecognition();
+    var speechRecognitionList = new SpeechGrammarList();
+    speechRecognitionList.addFromString(grammar, 1);
+    recognition.grammars = speechRecognitionList;
+    recognition.continuous = true;
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = function(event: {
+      results: [[{ transcript: string; confidence: number }]];
+    }) {
+      console.log(event);
+      var sendToBoard = event.results;
+      let le = sendToBoard.length;
+      const positions = sendToBoard[le - 1][0].transcript
+        .trim()
+        .toLowerCase()
+        .split(" ");
+      console.log(positions[0], '➡️', positions[1]);
+      if (sendToBoard[le - 1][0].confidence > 0.75) {
+        cq.move(positions[0] as Key, positions[1] as Key);
+      }
+    };
+
+    recognition.onspeechend = function() {
+      recognition.stop();
+    };
+
+    return cq;
   }
 };
