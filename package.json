@@ -26,6 +26,6 @@
   },
   "scripts": {
     "prepare": "gulp dev",
-    "start": "live-server --watch=./src"
+    "start": "gulp && live-server --watch=./src"
   }
 }
