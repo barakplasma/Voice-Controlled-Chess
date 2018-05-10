@@ -23,5 +23,9 @@
     "vinyl-buffer": "^1",
     "vinyl-source-stream": "^1",
     "watchify": "^3"
+  },
+  "scripts": {
+    "prepublish": "gulp dev",
+    "start": "serve"
   }
 }
